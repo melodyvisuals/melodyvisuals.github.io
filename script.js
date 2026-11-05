@@ -20,9 +20,11 @@ const PHOTOS = [
   { src: "img/wedding-7.jpg", cat: "wedding", alt: "Emotional embrace in black and white" },
   { src: "img/portrait-7.jpg", cat: "portrait", alt: "Young man in a suit at a celebration" },
   { src: "img/wedding-9.jpg", cat: "wedding", alt: "Bride clapping with groomsmen and drums" },
-  { src: "img/event-5.jpg", cat: "event", alt: "Concert hall filled with worshippers in white" }
+  { src: "img/event-5.jpg", cat: "event", alt: "Concert hall filled with worshippers in white" },
+  { src: "img/portrait-6.jpg", cat: "portrait", alt: "Man singing in a black velvet cape" }
 ];
 const LABEL = { wedding: "Wedding", event: "Event", portrait: "Portrait" };
+const FEATURED = [0, 11]; // shown large in the "All" view
 
 // ---- Client reviews: paste real quotes here; the reviews card shows when this list has entries ----
 // Example: { text: "Quote from the client…", name: "Name & Name", meta: "Wedding · Dallas, TX" }
@@ -31,13 +33,14 @@ const REVIEWS = [];
 // Gallery
 const gallery = document.getElementById("gallery");
 gallery.innerHTML = PHOTOS.map((p, i) =>
-  `<figure class="g-item" data-cat="${p.cat}" data-i="${i}"><img src="${p.src}" alt="${p.alt}" loading="lazy" width="980" height="1225"><figcaption>${LABEL[p.cat]}</figcaption></figure>`
+  `<figure class="g-item${FEATURED.includes(i) ? " big" : ""}" data-cat="${p.cat}" data-i="${i}"><img src="${p.src}" alt="${p.alt}" loading="lazy" width="980" height="1225"><figcaption>${LABEL[p.cat]}</figcaption></figure>`
 ).join("");
 
 const filters = document.querySelectorAll(".filter");
 function applyFilter(cat) {
   filters.forEach(b => { const on = b.dataset.filter === cat; b.classList.toggle("is-active", on); b.setAttribute("aria-selected", on); });
   gallery.querySelectorAll(".g-item").forEach(el => el.classList.toggle("hide", cat !== "all" && el.dataset.cat !== cat));
+  gallery.querySelectorAll(".g-item").forEach(el => el.classList.toggle("big", cat === "all" && FEATURED.includes(+el.dataset.i)));
 }
 filters.forEach(b => b.addEventListener("click", () => applyFilter(b.dataset.filter)));
 
@@ -76,15 +79,22 @@ if (REVIEWS.length) {
   render();
 }
 
+// Hero slideshow
+const slides = document.querySelectorAll(".slide");
+if (slides.length > 1 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let s = 0;
+  setInterval(() => { if (innerWidth >= 900) return; slides[s].classList.remove("is-on"); s = (s + 1) % slides.length; slides[s].classList.add("is-on"); }, 6000);
+}
+
 // Header + mobile menu
 const header = document.querySelector(".site-header");
-addEventListener("scroll", () => header.classList.toggle("scrolled", scrollY > 10), { passive: true });
+addEventListener("scroll", () => header.classList.toggle("scrolled", scrollY > 40), { passive: true });
 const toggle = document.querySelector(".menu-toggle"), menu = document.querySelector(".mobile-menu");
 toggle.addEventListener("click", () => { const open = menu.hidden; menu.hidden = !open; toggle.setAttribute("aria-expanded", open); });
 menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { menu.hidden = true; toggle.setAttribute("aria-expanded", false); }));
 
 // Reveal on scroll
 const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 }) : null;
-document.querySelectorAll(".split-head, .service, .couple, .film, .about-media, .about-text, .contact-form, .contact-info").forEach(el => { if (io) { el.classList.add("reveal"); io.observe(el); } });
+document.querySelectorAll(".statement, .svc-img, .svc-text, .sec-head, .couple-list li, .stories-intro, .about-media, .about-text, .contact-form, .contact-info").forEach(el => { if (io) { el.classList.add("reveal"); io.observe(el); } });
 
 document.getElementById("year").textContent = new Date().getFullYear();
