@@ -20,8 +20,7 @@ const PHOTOS = [
   { src: "img/wedding-7.jpg", cat: "wedding", alt: "Emotional embrace in black and white" },
   { src: "img/portrait-7.jpg", cat: "portrait", alt: "Young man in a suit at a celebration" },
   { src: "img/wedding-9.jpg", cat: "wedding", alt: "Bride clapping with groomsmen and drums" },
-  { src: "img/event-5.jpg", cat: "event", alt: "Concert hall filled with worshippers in white" },
-  { src: "img/portrait-6.jpg", cat: "portrait", alt: "Man singing in a black velvet cape" }
+  { src: "img/event-5.jpg", cat: "event", alt: "Concert hall filled with worshippers in white" }
 ];
 const LABEL = { wedding: "Wedding", event: "Event", portrait: "Portrait" };
 
