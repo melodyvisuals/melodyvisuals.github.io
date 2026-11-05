@@ -4,4 +4,4 @@ Static website for Melody Visuals (weddings, events, portraits), hosted on GitHu
 
 - **Add photos:** drop a `.jpg` into `img/` and add a line to `PHOTOS` at the top of `script.js` (`cat`: `wedding`, `event` or `portrait`).
 - **Add client reviews:** add entries to `REVIEWS` in `script.js`; the review card appears automatically.
-- **Contact form:** posts to FormSubmit and emails melodyvisuals26@gmail.com, then redirects to `thanks.html`.
+- **Contact form:** sent by Web3Forms to melodyvisuals26@gmail.com. The access key lives in the hidden `access_key` field in `index.html`.

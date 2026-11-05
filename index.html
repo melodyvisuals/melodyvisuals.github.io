@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 
@@ -179,11 +179,13 @@
       </ul>
     </div>
 
-    <form class="contact-form" action="https://formsubmit.co/melodyvisuals26@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="New inquiry from melodyvisuals.com">
-      <input type="hidden" name="_next" value="https://melodyvisuals.com/thanks.html">
-      <input type="hidden" name="_template" value="table">
-      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <!-- Contact form: delivered by Web3Forms. Paste the access key from web3forms.com into the access_key value below. -->
+    <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="subject" value="New inquiry from melodyvisuals.com">
+      <input type="hidden" name="from_name" value="Melody Visuals website">
+      <input type="hidden" name="redirect" value="https://melodyvisuals.com/thanks.html">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="row">
         <label><span>Your name</span><input type="text" name="name" required autocomplete="name"></label>
         <label><span>Email</span><input type="email" name="email" required autocomplete="email"></label>
@@ -207,7 +209,7 @@
       <label><span>Tell us about your day</span><textarea name="message" rows="4" required></textarea></label>
       <div class="form-foot">
         <button type="submit" class="btn btn-gold">Send Inquiry</button>
-        <p class="fine">We usually reply within 1–2 days.</p>
+        <p class="fine" id="form-status" role="status" aria-live="polite">We usually reply within 1–2 days.</p>
       </div>
     </form>
   </section>
@@ -230,6 +232,6 @@
   <button class="lb-next" aria-label="Next">›</button>
 </div>
 
-<script src="script.js?v=3"></script>
+<script src="script.js?v=4"></script>
 </body>
 </html>

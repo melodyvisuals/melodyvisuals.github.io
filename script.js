@@ -86,6 +86,38 @@ if (slides.length > 1 && !matchMedia("(prefers-reduced-motion: reduce)").matches
   setInterval(() => { if (innerWidth >= 900) return; slides[s].classList.remove("is-on"); s = (s + 1) % slides.length; slides[s].classList.add("is-on"); }, 6000);
 }
 
+// Contact form (Web3Forms) with inline status and a friendly fallback
+const form = document.getElementById("contact-form");
+if (form) {
+  const status = document.getElementById("form-status");
+  const btn = form.querySelector('button[type="submit"]');
+  const FALLBACK = 'Sorry, the form isn\'t working right now. Please call <a href="tel:+14696536815">+1 469 653 6815</a> or email <a href="mailto:melodyvisuals26@gmail.com">melodyvisuals26@gmail.com</a>.';
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    delete data.redirect;
+    if (!data.access_key || data.access_key.startsWith("YOUR_")) { status.innerHTML = FALLBACK; status.className = "fine err"; return; }
+    btn.disabled = true; btn.textContent = "Sending…"; status.className = "fine"; status.textContent = "Sending your inquiry…";
+    try {
+      const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 15000);
+      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data), signal: ctrl.signal });
+      clearTimeout(t);
+      const out = await res.json().catch(() => ({}));
+      if (res.ok && out.success) {
+        form.reset();
+        status.className = "fine ok";
+        status.textContent = "Thank you! Your inquiry was sent. We'll be in touch within 1–2 days.";
+        btn.textContent = "Sent";
+        return;
+      }
+      throw new Error(out.message || res.status);
+    } catch (err) {
+      status.innerHTML = FALLBACK; status.className = "fine err";
+      btn.disabled = false; btn.textContent = "Send Inquiry";
+    }
+  });
+}
+
 // Header + mobile menu
 const header = document.querySelector(".site-header");
 addEventListener("scroll", () => header.classList.toggle("scrolled", scrollY > 40), { passive: true });

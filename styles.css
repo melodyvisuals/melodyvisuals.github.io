@@ -166,6 +166,10 @@ h2 em,.statement em{font-style:italic;color:var(--gold)}
 .form-foot{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
 .hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
 .fine{margin:0;font-size:13px;color:var(--muted)}
+.fine.ok{color:var(--gold-2);font-size:15px}
+.fine.err{color:#F2A28F;font-size:15px}
+.fine a{color:var(--gold-2)}
+.btn:disabled{opacity:.6;cursor:wait}
 
 /* Footer */
 .footer{border-top:1px solid var(--line);padding:70px var(--pad) 36px;text-align:center}
